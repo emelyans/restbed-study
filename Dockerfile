@@ -17,10 +17,11 @@ LABEL maintainer "Sergei"
 LABEL image_type "Restbed dev container"
 RUN apt update \
     && apt upgrade -y \
-    && apt install -y cmake git vim \
+    && apt install -y cmake git vim gdb \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=restbed-builder /usr/src/restbed/distribution/include /usr/include
 COPY --from=restbed-builder usr/src/restbed/distribution/library /usr/lib/restbed
+RUN ldconfig /usr/lib/restbed
 COPY src/examples /usr/src/examples
 WORKDIR /usr/src/examples
 CMD /bin/bash
